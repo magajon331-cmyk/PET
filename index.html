@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07060f">
+  <title>Зарра — кодер дар IDE-и зинда</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%2307060f' width='64' height='64' rx='14'/%3E%3Ccircle cx='32' cy='36' r='16' fill='%23ffd7c2'/%3E%3Cpath d='M18 30 L24 12 L34 26 Z' fill='%23ffd7c2'/%3E%3Cpath d='M46 30 L40 12 L30 26 Z' fill='%23ffd7c2'/%3E%3Ccircle cx='26' cy='36' r='3' fill='%231b1230'/%3E%3Ccircle cx='38' cy='36' r='3' fill='%231b1230'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </div>
+
+  <div id="boot">
+    <div class="boot-sky" aria-hidden="true"></div>
+    <form class="gate" id="gate">
+      <div class="boot-moon" aria-hidden="true"></div>
+      <h2>Зарра</h2>
+      <p data-i18n="gateLead">Пеш аз даромадан, бигӯ ту кистӣ.</p>
+      <div class="gate-grid">
+        <label class="span2">
+          <span data-i18n="gateName">Ном</span>
+          <input id="gate-name" maxlength="24" autocomplete="name" required>
+        </label>
+        <label>
+          <span data-i18n="gateAge">Синну сол</span>
+          <input id="gate-age" inputmode="numeric" min="1" max="120" required>
+        </label>
+        <label>
+          <span data-i18n="gateYear">Соли таваллуд</span>
+          <input id="gate-year" inputmode="numeric" min="1920" max="2026" required>
+        </label>
+        <label class="span2">
+          <span data-i18n="gateMonth">Моҳ</span>
+          <select id="gate-month" required>
+            <option value="1" data-i18n="month1">Январ</option>
+            <option value="2" data-i18n="month2">Феврал</option>
+            <option value="3" data-i18n="month3">Март</option>
+            <option value="4" data-i18n="month4">Апрел</option>
+            <option value="5" data-i18n="month5">Май</option>
+            <option value="6" data-i18n="month6">Июн</option>
+            <option value="7" data-i18n="month7">Июл</option>
+            <option value="8" data-i18n="month8">Август</option>
+            <option value="9" data-i18n="month9">Сентябр</option>
+            <option value="10" data-i18n="month10">Октябр</option>
+            <option value="11" data-i18n="month11">Ноябр</option>
+            <option value="12" data-i18n="month12">Декабр</option>
+          </select>
+        </label>
+      </div>
+      <button type="submit" class="enter" data-i18n="gateEnter">Даромадан</button>
+    </form>
+  </div>
+  <div id="reg" class="reg" hidden>
+    <form class="gate" id="reg-form">
+      <h2 data-i18n="regTitle">Бақайдгирӣ</h2>
+      <p data-i18n="regLead">Ном, синну сол, сол ва моҳ. Робот бо овози забон гап мезанад.</p>
+      <div class="gate-grid">
+        <label class="span2"><span data-i18n="regUser">Номи ту</span><input id="reg-user" maxlength="24" required></label>
+        <label><span data-i18n="regAge">Синну сол</span><input id="reg-age" inputmode="numeric" required></label>
+        <label><span data-i18n="regYear">Соли таваллуд</span><input id="reg-year" inputmode="numeric" required></label>
+        <label class="span2"><span data-i18n="regMonth">Моҳ</span><select id="reg-month"></select></label>
+        <label class="span2"><span data-i18n="petName">Номи питомец</span><input id="reg-pet" maxlength="16" required></label>
+      </div>
+      <button type="submit" class="enter" data-i18n="regGo">Сабт</button>
+    </form>
+  </div>
+    <div class="party-card">
+      <b>100</b>
+      <p data-i18n="party">Зарра ба сатҳи 100 расид!</p>
+    </div>
+  </div>
+  <div id="chest" class="chest" hidden>
+    <div class="chest-card">
+      <b data-i18n="chestTitle">Қуттии махфӣ</b>
+      <p id="chest-body"></p>
+      <button type="button" id="chest-ok" data-i18n="chestOk">Гирифтан</button>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+    <header>
+      <div class="brand">
+        <span class="dots" aria-hidden="true"><i data-dot="0"></i><i data-dot="1"></i><i data-dot="2"></i></span>
+        <div>
+          <h1>Зарра</h1>
+          <p class="who" id="who"></p>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="tabs">
+        <button type="button" data-scroll="stage" class="is-active" id="tab-cat" data-i18n="tabScene">Саҳна</button>
+        <button type="button" data-scroll="inspector" data-i18n="tabStats">Ҳол</button>
+        <button type="button" data-scroll="terminal" data-i18n="tabTerm">Қайд</button>
+        <button type="button" data-scroll="sky" data-i18n="tabSky">Осмон</button>
+        <button type="button" id="btn-reg" data-i18n="reg">Бақайд</button>
+      </nav>
+      <div class="tools">
+        <button type="button" class="ghost" id="btn-settings" data-i18n="settings">Танзим</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel stage-panel">
+        <div id="stage" class="stage" data-mood="happy" data-action="idle">
+          <canvas id="fx"></canvas>
+          <div id="parallax">
+            <div class="scene">
+              <svg class="cat-svg" viewBox="0 0 760 640" role="img" aria-label="Зарра">
+                <defs>
+                  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#241447"/>
+                    <stop offset="0.55" stop-color="#120c28"/>
+                    <stop offset="1" stop-color="#090712"/>
+                  </linearGradient>
+                  <linearGradient id="deskG" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#322852"/>
+                    <stop offset="1" stop-color="#161226"/>
+                  </linearGradient>
+                  <radialGradient id="moonG" cx="50%" cy="50%" r="50%">
+                    <stop offset="0" stop-color="#ffe7c2" stop-opacity="0.95"/>
+                    <stop offset="1" stop-color="#ffe7c2" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="napHead" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#d7ecff"/>
+                    <stop offset="0.55" stop-color="#9ec4ff"/>
+                    <stop offset="1" stop-color="#7a78e8"/>
+                  </linearGradient>
+                  <linearGradient id="napBody" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#c5dcff"/>
+                    <stop offset="1" stop-color="#8ea6f0"/>
+                  </linearGradient>
+                  <linearGradient id="skyMorning" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffd29a"/>
+                    <stop offset="0.45" stop-color="#ffb0c8"/>
+                    <stop offset="1" stop-color="#7ec8ff"/>
+                  </linearGradient>
+                  <linearGradient id="skyAfternoon" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#7ecbff"/>
+                    <stop offset="0.55" stop-color="#b9e4ff"/>
+                    <stop offset="1" stop-color="#ffe3b0"/>
+                  </linearGradient>
+                  <clipPath id="winClip">
+                    <rect x="78" y="36" width="604" height="318" rx="28"/>
+                  </clipPath>
+                  <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000" flood-opacity="0.35"/>
+                  </filter>
+                </defs>
+
+                <g clip-path="url(#winClip)">
+                  <rect class="sky-fill" x="78" y="36" width="604" height="318" fill="url(#sky)"/>
+                  <g class="sun">
+                    <circle cx="560" cy="108" r="78" fill="#ffe08a" opacity="0.35"/>
+                    <circle cx="560" cy="108" r="34" fill="#fff4c4"/>
+                  </g>
+                  <g class="clouds" fill="#fff">
+                    <ellipse cx="180" cy="120" rx="46" ry="16" opacity="0.85"/>
+                    <ellipse cx="214" cy="112" rx="28" ry="14" opacity="0.9"/>
+                    <ellipse cx="430" cy="150" rx="54" ry="16" opacity="0.75"/>
+                  </g>
+                  <g class="moon">
+                    <circle cx="590" cy="110" r="70" fill="url(#moonG)"/>
+                    <circle cx="590" cy="110" r="26" fill="#ffe7c2"/>
+                  </g>
+                  <g class="stars" fill="#fff">
+                    <circle cx="140" cy="80" r="1.6"/>
+                    <circle cx="210" cy="120" r="1.2"/>
+                    <circle cx="250" cy="70" r="1.8"/>
+                    <circle cx="320" cy="96" r="1.2"/>
+                    <circle cx="400" cy="64" r="1.5"/>
+                    <circle cx="470" cy="130" r="1.3"/>
+                    <circle cx="530" cy="78" r="1.4"/>
+                    <circle cx="180" cy="160" r="1.1"/>
+                    <circle cx="360" cy="150" r="1.2"/>
+                  </g>
+                  <g class="city" fill="#140c24">
+                    <rect x="96" y="250" width="34" height="104"/>
+                    <rect x="140" y="220" width="42" height="134"/>
+                    <rect x="190" y="268" width="26" height="86"/>
+                    <rect x="230" y="236" width="38" height="118"/>
+                    <rect x="430" y="246" width="30" height="108"/>
+                    <rect x="470" y="210" width="46" height="144"/>
+                    <rect x="526" y="260" width="28" height="94"/>
+                    <rect x="564" y="230" width="40" height="124"/>
+                    <rect x="612" y="272" width="24" height="82"/>
+                  </g>
+                  <g class="wins" fill="#ffd27a">
+                    <rect x="150" y="236" width="6" height="8"/>
+                    <rect x="166" y="258" width="6" height="8"/>
+                    <rect x="242" y="252" width="6" height="8"/>
+                    <rect x="484" y="230" width="6" height="8"/>
+                    <rect x="500" y="268" width="6" height="8"/>
+                    <rect x="578" y="250" width="6" height="8"/>
+                    <rect x="156" y="286" width="6" height="8" opacity="0.55"/>
+                    <rect x="492" y="300" width="6" height="8" opacity="0.7"/>
+                  </g>
+                  <g class="outdoor">
+                    <rect class="heat" x="78" y="36" width="604" height="318"/>
+                    <rect class="frost" x="78" y="36" width="604" height="200"/>
+                    <g class="drops" fill="none" stroke="#d7ecff" stroke-width="2" stroke-linecap="round">
+                      <path d="M120 48 l-10 26"/><path d="M180 70 l-10 26"/><path d="M240 40 l-10 26"/>
+                      <path d="M300 90 l-10 26"/><path d="M360 54 l-10 26"/><path d="M420 80 l-10 26"/>
+                      <path d="M480 46 l-10 26"/><path d="M540 96 l-10 26"/><path d="M600 60 l-10 26"/>
+                      <path d="M150 140 l-10 26"/><path d="M210 160 l-10 26"/><path d="M280 130 l-10 26"/>
+                      <path d="M340 170 l-10 26"/><path d="M410 150 l-10 26"/><path d="M470 180 l-10 26"/>
+                      <path d="M530 140 l-10 26"/><path d="M590 168 l-10 26"/><path d="M640 120 l-10 26"/>
+                      <path d="M130 210 l-10 26"/><path d="M200 230 l-10 26"/><path d="M270 200 l-10 26"/>
+                      <path d="M350 240 l-10 26"/><path d="M430 214 l-10 26"/><path d="M510 236 l-10 26"/>
+                      <path d="M580 208 l-10 26"/><path d="M640 228 l-10 26"/>
+                    </g>
+                    <g class="flakes" fill="#fff">
+                      <circle cx="130" cy="70" r="2.2"/><circle cx="190" cy="120" r="1.6"/>
+                      <circle cx="250" cy="60" r="2.4"/><circle cx="320" cy="150" r="1.8"/>
+                      <circle cx="380" cy="90" r="2"/><circle cx="450" cy="140" r="1.5"/>
+                      <circle cx="510" cy="70" r="2.3"/><circle cx="570" cy="160" r="1.7"/>
+                      <circle cx="630" cy="100" r="2.1"/><circle cx="160" cy="200" r="1.6"/>
+                      <circle cx="230" cy="230" r="2.2"/><circle cx="300" cy="190" r="1.4"/>
+                      <circle cx="370" cy="250" r="2"/><circle cx="440" cy="210" r="1.8"/>
+                      <circle cx="520" cy="240" r="2.4"/><circle cx="600" cy="220" r="1.5"/>
+                      <circle cx="150" cy="280" r="1.7"/><circle cx="260" cy="300" r="2"/>
+                      <circle cx="400" cy="290" r="1.6"/><circle cx="540" cy="300" r="2.1"/>
+                    </g>
+                  </g>
+                </g>
+                <rect x="78" y="36" width="604" height="318" rx="28" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="8"/>
+
+                <rect x="48" y="512" width="664" height="92" rx="22" fill="url(#deskG)"/>
+                <rect x="48" y="512" width="664" height="14" rx="7" fill="rgba(255,255,255,.06)"/>
+
+                <g class="bed">
+                  <rect x="24" y="430" width="150" height="78" rx="18" fill="#4c3672"/>
+                  <rect x="36" y="448" width="126" height="48" rx="14" fill="#6a4d96"/>
+                  <rect x="36" y="486" width="460" height="62" rx="28" fill="#241833"/>
+                  <rect x="52" y="468" width="420" height="52" rx="24" fill="#fff8f1"/>
+                  <ellipse cx="108" cy="488" rx="40" ry="20" fill="#ffe0f0"/>
+                  <ellipse cx="168" cy="492" rx="28" ry="14" fill="#fff"/>
+                  <path d="M200 470 h230 q28 16 -4 36 h-210 z" fill="#c9b6ff"/>
+                  <path d="M230 484 h160" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+                  <rect x="36" y="532" width="16" height="22" rx="4" fill="#3a2a55"/>
+                  <rect x="468" y="532" width="16" height="22" rx="4" fill="#3a2a55"/>
+                </g>
+                <g class="study">
+                  <rect x="520" y="470" width="54" height="42" rx="4" fill="#6d7cff"/>
+                  <rect x="528" y="456" width="54" height="42" rx="4" fill="#ff8ac7"/>
+                  <rect x="536" y="442" width="54" height="42" rx="4" fill="#fff6ee"/>
+                  <path d="M546 456 h34 M546 464 h28 M546 472 h30" stroke="#c9b6d8" stroke-width="2" stroke-linecap="round"/>
+                  <rect x="600" y="488" width="46" height="28" rx="4" fill="#ffe7a8"/>
+                  <path d="M608 498 h30 M608 506 h22" stroke="#c9842a" stroke-width="2" stroke-linecap="round"/>
+                  <rect x="612" y="468" width="6" height="28" rx="2" fill="#ffb347"/>
+                  <rect x="622" y="472" width="6" height="24" rx="2" fill="#5ef2ff"/>
+                </g>
+                <g class="playpen">
+                  <ellipse cx="560" cy="512" rx="90" ry="22" fill="#3a2a66"/>
+                  <circle cx="520" cy="486" r="16" fill="#ff7a6e"/>
+                  <circle cx="534" cy="492" r="8" fill="#fff" opacity=".35"/>
+                  <rect x="560" y="470" width="22" height="22" rx="4" fill="#ffc857" transform="rotate(-8 571 481)"/>
+                  <rect x="582" y="478" width="22" height="22" rx="4" fill="#5ef2ff" transform="rotate(10 593 489)"/>
+                  <rect x="568" y="492" width="22" height="22" rx="4" fill="#c6ff4a"/>
+                  <circle cx="620" cy="470" r="14" fill="#ffd24a"/>
+                  <circle cx="614" cy="466" r="3" fill="#1b1230"/>
+                  <circle cx="626" cy="466" r="3" fill="#1b1230"/>
+                  <path d="M614 476 q6 5 12 0" fill="none" stroke="#1b1230" stroke-width="1.6" stroke-linecap="round"/>
+                </g>
+                <g class="plate">
+                  <ellipse cx="250" cy="470" rx="46" ry="16" fill="#fff6ee"/>
+                  <ellipse class="food-mound" cx="250" cy="462" rx="28" ry="11" fill="#ffb347"/>
+                  <circle class="crumb" cx="236" cy="458" r="7" fill="#ff7a6e"/>
+                  <circle class="crumb crumb-b" cx="264" cy="456" r="6" fill="#7dffb3"/>
+                  <circle class="crumb crumb-c" cx="250" cy="452" r="5" fill="#fff6ee"/>
+                </g>
+                <g class="walker">
+                  <g class="leg leg-a">
+                    <rect x="112" y="468" width="16" height="48" rx="8" fill="#ffd7c2"/>
+                    <ellipse cx="120" cy="520" rx="14" ry="7" fill="#ffd7c2"/>
+                  </g>
+                  <g class="leg leg-b">
+                    <rect x="138" y="468" width="16" height="48" rx="8" fill="#ffe4d4"/>
+                    <ellipse cx="146" cy="520" rx="14" ry="7" fill="#ffe4d4"/>
+                  </g>
+                  <ellipse class="hoodie" cx="136" cy="430" rx="40" ry="46" fill="currentColor"/>
+                  <circle cx="136" cy="372" r="30" fill="#ffd7c2"/>
+                  <path d="M112 360 C108 332 128 322 136 346 Z" fill="#ffd7c2"/>
+                  <path d="M160 360 C164 332 144 322 136 346 Z" fill="#ffd7c2"/>
+                  <ellipse cx="124" cy="372" rx="6" ry="7" fill="#fff"/>
+                  <ellipse cx="148" cy="372" rx="6" ry="7" fill="#fff"/>
+                  <ellipse cx="125" cy="374" rx="3" ry="3.5" fill="#1b1230"/>
+                  <ellipse cx="147" cy="374" rx="3" ry="3.5" fill="#1b1230"/>
+                  <path d="M126 386 q10 8 20 0" fill="none" stroke="#3a2438" stroke-width="2" stroke-linecap="round"/>
+                </g>
+
+                <g class="lamp" id="lamp" role="button" tabindex="0" aria-label="Лампа">
+                  <rect class="lamp-hit" x="630" y="410" width="78" height="108" fill="#fff" opacity="0"/>
+                  <rect x="648" y="498" width="36" height="10" rx="4" fill="#2a2144"/>
+                  <rect class="lamp-stem" x="662" y="428" width="8" height="74" rx="3" fill="#4a4168"/>
+                  <path class="lamp-shade" d="M642 430 h52 l-8 26 h-36 z" fill="#ffe7a8"/>
+                  <ellipse class="lamp-glow" cx="666" cy="456" rx="26" ry="7" fill="#ffe7a8"/>
+                </g>
+                <g class="book">
+                  <rect x="78" y="470" width="86" height="50" rx="5" fill="#fff6ee"/>
+                  <path d="M121 470 v50" stroke="#e7c2d8" stroke-width="2"/>
+                  <path d="M90 484 h22 M90 492 h16 M90 500 h20" stroke="#b9a6ff" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M130 484 h24 M130 492 h18 M130 500 h14" stroke="#ff8ac7" stroke-width="2" stroke-linecap="round"/>
+                </g>
+
+                <g class="cat-bob">
+                  <g class="cat-inner">
+                    <path class="tail" d="M250 430 C160 450 130 340 210 300" fill="none" stroke="#ffd7c2" stroke-width="18" stroke-linecap="round"/>
+                    <ellipse class="hoodie body" cx="380" cy="438" rx="156" ry="96" fill="currentColor"/>
+                    <ellipse class="hood hoodie" cx="380" cy="304" rx="118" ry="124" fill="currentColor"/>
+                    <circle class="head" cx="380" cy="268" r="94" fill="#ffd7c2"/>
+                    <ellipse class="sheen" cx="348" cy="236" rx="26" ry="16" fill="#fff" opacity=".22"/>
+
+                    <path class="tuft" d="M358 168 Q380 132 404 168 Q382 156 358 168" fill="#ffe4cf"/>
+                    <g class="ear ear-l">
+                      <path d="M296 228 C286 156 328 112 368 176 C338 198 314 220 296 228 Z" fill="#ffd7c2"/>
+                      <path d="M312 214 C306 168 336 140 358 176 C338 188 322 204 312 214 Z" fill="#ff9ec4"/>
+                    </g>
+                    <g class="ear ear-r">
+                      <path d="M464 228 C474 156 432 112 392 176 C422 198 446 220 464 228 Z" fill="#ffd7c2"/>
+                      <path d="M448 214 C454 168 424 140 402 176 C422 188 438 204 448 214 Z" fill="#ff9ec4"/>
+                    </g>
+
+                    <ellipse class="blush" cx="308" cy="304" rx="18" ry="10" fill="#ff8fb8" opacity=".8"/>
+                    <ellipse class="blush" cx="452" cy="304" rx="18" ry="10" fill="#ff8fb8" opacity=".8"/>
+
+                    <g class="eyes">
+                      <g class="eye" transform="translate(342 266)">
+                        <ellipse cx="0" cy="0" rx="24" ry="28" fill="#fff"/>
+                        <ellipse class="pupil" cx="2" cy="2" rx="11" ry="14" fill="#1b1230"/>
+                        <ellipse cx="8" cy="-8" rx="5" ry="6" fill="#fff"/>
+                        <ellipse cx="-6" cy="8" rx="2.4" ry="2.4" fill="#5ef2ff"/>
+                        <path d="M-16 -8 Q0 -18 16 -8" fill="none" stroke="#fff" stroke-width="2" opacity=".65"/>
+                      </g>
+                      <g class="eye" transform="translate(418 266)">
+                        <ellipse cx="0" cy="0" rx="24" ry="28" fill="#fff"/>
+                        <ellipse class="pupil" cx="-2" cy="2" rx="11" ry="14" fill="#1b1230"/>
+                        <ellipse cx="6" cy="-8" rx="5" ry="6" fill="#fff"/>
+                        <ellipse cx="-8" cy="8" rx="2.4" ry="2.4" fill="#5ef2ff"/>
+                        <path d="M-16 -8 Q0 -18 16 -8" fill="none" stroke="#fff" stroke-width="2" opacity=".65"/>
+                      </g>
+                    </g>
+
+                    <path class="brow b-l" d="M318 230 Q342 222 366 236"/>
+                    <path class="brow b-r" d="M442 230 Q418 222 394 236"/>
+
+                    <ellipse cx="380" cy="306" rx="7" ry="5.5" fill="#ff5d8a"/>
+                    <g class="mouth">
+                      <ellipse class="sip" cx="392" cy="334" rx="8" ry="5" fill="#6b3a22"/>
+                    <path class="m-smile" d="M344 316 Q380 358 416 316"/>
+                      <path class="m-flat" d="M358 330 H402"/>
+                      <path class="m-sad" d="M352 340 Q380 322 408 340"/>
+                    </g>
+                    <g class="held-food">
+                      <ellipse cx="430" cy="368" rx="34" ry="12" fill="#fff6ee"/>
+                      <ellipse class="food-mound" cx="430" cy="362" rx="18" ry="8" fill="#ffb347"/>
+                      <circle class="crumb" cx="416" cy="358" r="6" fill="#ff7a6e"/>
+                      <circle class="crumb crumb-b" cx="444" cy="356" r="5" fill="#7dffb3"/>
+                    </g>
+                    <g class="whiskers" fill="none" stroke="#6a4a55" stroke-width="2" stroke-linecap="round">
+                      <path d="M318 312 H270"/>
+                      <path d="M320 324 H268"/>
+                      <path d="M324 334 H276"/>
+                      <path d="M442 312 H490"/>
+                      <path d="M440 324 H492"/>
+                      <path d="M436 334 H484"/>
+                    </g>
+
+                    <g class="glasses">
+                      <circle cx="342" cy="266" r="32"/>
+                      <circle cx="418" cy="266" r="32"/>
+                      <path d="M374 266 H386"/>
+                      <path d="M310 258 L286 246"/>
+                      <path d="M450 258 L474 246"/>
+                      <path d="M326 250 Q342 242 356 250" opacity=".7"/>
+                    </g>
+                    <g class="robot-kit">
+                      <rect x="376" y="118" width="8" height="36" rx="4" fill="#b7cbe8"/>
+                      <circle class="antenna-light nap-ball" cx="380" cy="110" r="11" fill="#5ef2ff"/>
+                      <rect x="278" y="156" width="204" height="168" rx="46" fill="url(#napHead)"/>
+                      <rect x="258" y="214" width="26" height="48" rx="12" fill="#9ebef2"/>
+                      <rect x="476" y="214" width="26" height="48" rx="12" fill="#9ebef2"/>
+                      <rect x="298" y="174" width="164" height="132" rx="34" fill="#141a33"/>
+                      <ellipse cx="348" cy="224" rx="16" ry="18" fill="#241433"/>
+                      <ellipse cx="412" cy="224" rx="16" ry="18" fill="#241433"/>
+                      <ellipse cx="352" cy="220" rx="7" ry="8" fill="#ffe1fb"/>
+                      <ellipse cx="416" cy="220" rx="7" ry="8" fill="#ffe1fb"/>
+                      <path class="robot-smile" d="M348 258 Q380 286 412 258"/>
+                      <circle cx="380" cy="248" r="6" fill="#f3b6e4"/>
+                      <rect x="318" y="308" width="124" height="64" rx="22" fill="url(#napBody)"/>
+                      <rect x="292" y="328" width="30" height="16" rx="8" fill="#8eb4ee"/>
+                      <rect x="438" y="328" width="30" height="16" rx="8" fill="#8eb4ee"/>
+                      <rect x="342" y="322" width="76" height="34" rx="10" fill="#101628"/>
+                      <text class="nap-screen" x="380" y="345">:)</text>
+                    </g>
+                    <g class="fox-kit">
+                      <path d="M304 214 L332 118 L368 196 Z" fill="#ff8a3d"/>
+                      <path d="M456 214 L428 118 L392 196 Z" fill="#ff8a3d"/>
+                      <path d="M318 196 L340 150 L356 190 Z" fill="#ffd7c2"/>
+                      <path d="M442 196 L420 150 L404 190 Z" fill="#ffd7c2"/>
+                      <ellipse cx="380" cy="328" rx="42" ry="24" fill="#fff6ee"/>
+                      <ellipse cx="380" cy="316" rx="11" ry="8" fill="#ff7a3c"/>
+                    </g>
+                    <g class="bear-kit">
+                      <circle cx="292" cy="156" r="36" fill="#c9895b"/>
+                      <circle cx="468" cy="156" r="36" fill="#c9895b"/>
+                      <circle cx="292" cy="156" r="16" fill="#f3d2b0"/>
+                      <circle cx="468" cy="156" r="16" fill="#f3d2b0"/>
+                      <ellipse cx="380" cy="332" rx="46" ry="28" fill="#f3d2b0"/>
+                      <ellipse cx="380" cy="318" rx="16" ry="11" fill="#6b4128"/>
+                    </g>
+                    <g class="bird-kit">
+                      <path d="M348 168 Q380 78 412 168 Q380 146 348 168" fill="#ffe08a"/>
+                      <path d="M364 298 L430 314 L364 332 Z" fill="#ffb347"/>
+                      <path d="M364 314 H418" stroke="#e08a28" stroke-width="2"/>
+                      <path d="M248 392 q-86 18 -48 78 q62 -18 58 -46" fill="#ffe08a"/>
+                      <path d="M512 392 q86 18 48 78 q-62 -18 -58 -46" fill="#ffe08a"/>
+                    </g>
+                    <g class="held-book">
+                      <g transform="rotate(-16 380 430)">
+                        <rect x="286" y="388" width="188" height="100" rx="10" fill="#fff6ee" stroke="#f0b7d4" stroke-width="4"/>
+                        <path d="M380 388 v100" stroke="#e7c2d8" stroke-width="3"/>
+                        <path d="M304 410 h60 M304 426 h48 M304 442 h56" stroke="#b9a6ff" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M396 410 h62 M396 426 h46 M396 442 h54" stroke="#ff8ac7" stroke-width="3.5" stroke-linecap="round"/>
+                      </g>
+                    </g>
+                    <g class="wear wear-beanie">
+                      <ellipse cx="380" cy="186" rx="82" ry="30" fill="#241838"/>
+                      <ellipse cx="380" cy="172" rx="64" ry="24" fill="#6d5cff"/>
+                      <circle cx="380" cy="150" r="11" fill="#ff4ecd"/>
+                    </g>
+                    <g class="wear wear-cap">
+                      <path d="M292 214 h168 q8 -48 -28 -62 h-112 q-36 14 -28 62z" fill="#1b1230"/>
+                      <path d="M448 198 h78 q10 18 -8 24 h-70z" fill="#1b1230"/>
+                      <rect x="310" y="196" width="128" height="18" rx="5" fill="#ff4ecd"/>
+                    </g>
+                    <g class="wear wear-phones">
+                      <path d="M308 228 H452" fill="none" stroke="#221833" stroke-width="8" stroke-linecap="round"/>
+                      <path d="M308 228 q-28 18 -16 78" fill="none" stroke="#221833" stroke-width="10" stroke-linecap="round"/>
+                      <path d="M452 228 q28 18 16 78" fill="none" stroke="#221833" stroke-width="10" stroke-linecap="round"/>
+                      <rect x="274" y="292" width="30" height="40" rx="10" fill="#5ef2ff"/>
+                      <rect x="456" y="292" width="30" height="40" rx="10" fill="#7dffb3"/>
+                    </g>
+                    <g class="wear wear-dev">
+                      <rect x="332" y="392" width="96" height="32" rx="10" fill="#120e22" stroke="#5ef2ff" stroke-width="3"/>
+                      <text x="380" y="414" text-anchor="middle" fill="#5ef2ff" font-size="16" font-family="ui-monospace,monospace">DEV</text>
+                    </g>
+                    <g class="mut mut-laser">
+                      <path d="M300 266 H210" />
+                      <path d="M460 266 H550" />
+                    </g>
+                    <g class="mut mut-wings">
+                      <path d="M250 360 q-90 -20 -70 80 q70 -10 80 -40" />
+                      <path d="M510 360 q90 -20 70 80 q-70 -10 -80 -40" />
+                    </g>
+                    <g class="mut mut-armor">
+                      <path d="M300 390 h160 l-16 70 h-128 z" />
+                    </g>
+                    <ellipse class="mut mut-aura" cx="380" cy="360" rx="210" ry="170" />
+                    <g class="sparks" fill="none" stroke="#9ad8ff" stroke-width="3" stroke-linecap="round">
+                      <path d="M248 240 l16 26 -14 3 18 28"/>
+                      <path d="M512 228 l-14 24 12 3 -16 26"/>
+                    </g>
+                  </g>
+                </g>
+
+                <g class="laptop" filter="url(#soft)">
+                  <rect x="268" y="356" width="224" height="132" rx="16" fill="#221a34"/>
+                  <rect class="screen" x="280" y="368" width="200" height="100" rx="8" fill="#070b12"/>
+                  <rect x="280" y="368" width="200" height="100" rx="8" fill="none" stroke="rgba(94,242,255,.25)"/>
+                  <rect x="262" y="486" width="236" height="22" rx="7" fill="#2a2242"/>
+                  <g fill="#4a4168">
+                    <rect x="286" y="492" width="18" height="9" rx="2"/>
+                    <rect x="310" y="492" width="18" height="9" rx="2"/>
+                    <rect x="334" y="492" width="18" height="9" rx="2"/>
+                    <rect x="358" y="492" width="18" height="9" rx="2"/>
+                    <rect x="382" y="492" width="18" height="9" rx="2"/>
+                    <rect x="406" y="492" width="18" height="9" rx="2"/>
+                    <rect x="430" y="492" width="18" height="9" rx="2"/>
+                    <rect x="454" y="492" width="18" height="9" rx="2"/>
+                  </g>
+                  <g class="sticker" transform="translate(424 374)">
+                    <rect x="0" y="2" width="18" height="16" rx="4" fill="#fff6ee"/>
+                    <rect x="2" y="8" width="14" height="3" rx="1.5" fill="#ff4ecd"/>
+                    <path d="M18 5 h5 a4 4 0 0 1 0 8 h-5" fill="none" stroke="#fff6ee" stroke-width="2.2"/>
+                    <ellipse cx="44" cy="11" rx="10" ry="6" fill="#c6ff4a"/>
+                    <path d="M36 7 l-7 -6 M52 7 l7 -6 M36 15 l-6 5 M52 15 l6 5" stroke="#c6ff4a" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="41" cy="10" r="1.3" fill="#1b1230"/>
+                    <circle cx="47" cy="10" r="1.3" fill="#1b1230"/>
+                  </g>
+                </g>
+
+                <g class="paws">
+                  <g class="paw paw-l">
+                    <ellipse cx="318" cy="496" rx="32" ry="16" fill="#ffd7c2" stroke="#e7b198" stroke-width="2"/>
+                    <ellipse cx="306" cy="498" rx="6" ry="4" fill="#ff8fb8"/>
+                    <ellipse cx="320" cy="500" rx="6" ry="4" fill="#ff8fb8"/>
+                    <ellipse cx="334" cy="498" rx="6" ry="4" fill="#ff8fb8"/>
+                  </g>
+                  <g class="paw paw-r">
+                    <ellipse cx="444" cy="496" rx="32" ry="16" fill="#ffd7c2" stroke="#e7b198" stroke-width="2"/>
+                    <ellipse cx="432" cy="498" rx="6" ry="4" fill="#ff8fb8"/>
+                    <ellipse cx="446" cy="500" rx="6" ry="4" fill="#ff8fb8"/>
+                    <ellipse cx="460" cy="498" rx="6" ry="4" fill="#ff8fb8"/>
+                  </g>
+                </g>
+
+                <g class="sitter" transform="translate(0 -18)">
+                  <path d="M292 492 C240 520 228 458 286 446" fill="none" stroke="#ffd7c2" stroke-width="14" stroke-linecap="round"/>
+                  <ellipse class="hoodie" cx="380" cy="498" rx="86" ry="26" fill="currentColor"/>
+                  <ellipse class="hoodie" cx="380" cy="456" rx="64" ry="42" fill="currentColor"/>
+                  <path d="M328 458 C300 486 308 512 346 514" fill="none" stroke="#ffd7c2" stroke-width="13" stroke-linecap="round"/>
+                  <ellipse cx="352" cy="516" rx="16" ry="10" fill="#ffd7c2"/>
+                  <path d="M358 508 l8 2 M356 514 l9 4 M354 520 l7 5" stroke="#e7b198" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M432 458 C460 486 452 512 414 514" fill="none" stroke="#ffd7c2" stroke-width="13" stroke-linecap="round"/>
+                  <ellipse cx="408" cy="516" rx="16" ry="10" fill="#ffd7c2"/>
+                  <path d="M400 508 l-8 2 M404 514 l-9 4 M406 520 l-7 5" stroke="#e7b198" stroke-width="2" stroke-linecap="round"/>
+                  <ellipse cx="338" cy="508" rx="22" ry="11" fill="#ffd7c2" stroke="#e7b198" stroke-width="2"/>
+                  <ellipse cx="328" cy="510" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <ellipse cx="338" cy="512" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <ellipse cx="348" cy="510" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <ellipse cx="422" cy="508" rx="22" ry="11" fill="#ffd7c2" stroke="#e7b198" stroke-width="2"/>
+                  <ellipse cx="412" cy="510" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <ellipse cx="422" cy="512" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <ellipse cx="432" cy="510" rx="5" ry="3.2" fill="#ff9ab8"/>
+                  <path d="M348 392 C338 352 366 338 380 372 Z" fill="#ffd7c2"/>
+                  <path d="M354 384 C350 360 366 350 376 372 Z" fill="#ff9ec4"/>
+                  <path d="M412 392 C422 352 394 338 380 372 Z" fill="#ffd7c2"/>
+                  <path d="M406 384 C410 360 394 350 384 372 Z" fill="#ff9ec4"/>
+                  <circle cx="380" cy="404" r="40" fill="#ffd7c2"/>
+                  <ellipse cx="364" cy="388" rx="12" ry="7" fill="#fff" opacity=".28"/>
+                  <g class="eyes">
+                    <ellipse cx="364" cy="404" rx="10" ry="12" fill="#fff"/>
+                    <ellipse cx="366" cy="406" rx="5" ry="6" fill="#1b1230"/>
+                    <ellipse cx="396" cy="404" rx="10" ry="12" fill="#fff"/>
+                    <ellipse cx="394" cy="406" rx="5" ry="6" fill="#1b1230"/>
+                  </g>
+                  <g class="glasses">
+                    <circle cx="364" cy="404" r="16"/>
+                    <circle cx="396" cy="404" r="16"/>
+                    <path d="M380 404 H380"/>
+                  </g>
+                  <ellipse cx="380" cy="418" rx="4" ry="3" fill="#ff5d8a"/>
+                  <path d="M368 426 Q380 436 392 426" fill="none" stroke="#3a2438" stroke-width="2.2" stroke-linecap="round"/>
+                  <ellipse cx="346" cy="416" rx="7" ry="4" fill="#ff8fb8" opacity=".8"/>
+                  <ellipse cx="414" cy="416" rx="7" ry="4" fill="#ff8fb8" opacity=".8"/>
+                </g>
+
+                <g class="duck">
+                  <ellipse cx="118" cy="498" rx="34" ry="20" fill="#ffd24a"/>
+                  <circle cx="148" cy="478" r="16" fill="#ffe27a"/>
+                  <path d="M160 478 l16 3 -16 6 z" fill="#ff8a3d"/>
+                  <circle cx="154" cy="474" r="2.2" fill="#1b1230"/>
+                  <ellipse cx="100" cy="508" rx="10" ry="5" fill="#f0b429"/>
+                </g>
+
+                <g class="mug">
+                  <g class="cup cup-mug">
+                    <rect x="548" y="468" width="54" height="44" rx="10" fill="#f4f1ff"/>
+                    <rect x="556" y="476" width="38" height="8" rx="4" fill="#ff4ecd" class="mug-band"/>
+                    <path d="M602 478 q18 10 0 28" fill="none" stroke="#f4f1ff" stroke-width="6" stroke-linecap="round"/>
+                  </g>
+                  <g class="cup cup-glass">
+                    <path d="M558 452 h36 l-5 60 h-26 z" fill="rgba(255,255,255,.22)" stroke="#fff" stroke-width="2"/>
+                    <path d="M564 478 h24 l-3 28 h-18 z" fill="#6b3a22"/>
+                    <ellipse cx="576" cy="452" rx="18" ry="5" fill="none" stroke="#fff" stroke-width="2"/>
+                  </g>
+                  <g class="cup cup-can">
+                    <rect x="554" y="454" width="40" height="58" rx="7" fill="#ff4ecd"/>
+                    <rect x="554" y="470" width="40" height="12" fill="#fff6ee"/>
+                    <ellipse cx="574" cy="454" rx="20" ry="5" fill="#ff8adf"/>
+                  </g>
+                  <g class="cup cup-bowl">
+                    <path d="M540 486 q34 42 68 0 z" fill="#f4f1ff"/>
+                    <ellipse cx="574" cy="486" rx="34" ry="9" fill="#fff"/>
+                    <ellipse cx="574" cy="488" rx="20" ry="5" fill="#6b3a22"/>
+                  </g>
+                  <g class="steam" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round">
+                    <path d="M566 448 q8 -12 0 -22"/>
+                    <path d="M584 444 q8 -12 0 -22"/>
+                  </g>
+                </g>
+                <g class="bed bed-lip">
+                  <rect x="48" y="524" width="400" height="20" rx="10" fill="#fff8f1"/>
+                  <rect x="48" y="536" width="400" height="16" rx="8" fill="#2a2144"/>
+                </g>
+                <g class="sleeper">
+                  <path d="M392 508 C430 528 446 500 420 486" fill="none" stroke="#ffd7c2" stroke-width="11" stroke-linecap="round"/>
+                  <path class="hoodie" d="M176 470 h214 q30 0 30 30 v10 q0 24 -26 24 H176 q-26 0 -26 -24 v-10 q0 -30 26 -30 z" fill="currentColor"/>
+                  <ellipse cx="408" cy="518" rx="15" ry="9" fill="#ffd7c2"/>
+                  <ellipse cx="388" cy="522" rx="13" ry="8" fill="#ffe4d4"/>
+                  <ellipse cx="204" cy="496" rx="18" ry="10" fill="#ffd7c2"/>
+                  <ellipse cx="226" cy="502" rx="15" ry="9" fill="#ffe4d4"/>
+                  <path class="sleeper-ear" d="M92 430 C86 396 112 380 128 408 Z" fill="#ffd7c2"/>
+                  <path class="sleeper-ear" d="M98 424 C96 404 110 394 120 410 Z" fill="#ff9ec4"/>
+                  <path class="sleeper-ear" d="M150 428 C162 394 136 376 118 406 Z" fill="#ffd7c2"/>
+                  <path class="sleeper-ear" d="M144 420 C150 400 136 390 124 408 Z" fill="#ff9ec4"/>
+                  <circle cx="124" cy="456" r="34" fill="#ffd7c2"/>
+                  <ellipse cx="112" cy="442" rx="12" ry="7" fill="#fff" opacity=".3"/>
+                  <path d="M102 454 Q114 462 126 454" fill="none" stroke="#3a2438" stroke-width="2.6" stroke-linecap="round"/>
+                  <path d="M130 454 Q142 462 154 454" fill="none" stroke="#3a2438" stroke-width="2.6" stroke-linecap="round"/>
+                  <g class="sleeper-glass" fill="none" stroke="#e7fbff" stroke-width="2.4">
+                    <circle cx="114" cy="456" r="13"/>
+                    <circle cx="142" cy="456" r="13"/>
+                    <path d="M127 456 H129"/>
+                  </g>
+                  <g class="sleeper-visor">
+                    <rect x="96" y="444" width="56" height="16" rx="6" fill="#102033"/>
+                    <rect x="102" y="448" width="18" height="8" rx="3" fill="#5ef2ff"/>
+                    <rect x="126" y="448" width="18" height="8" rx="3" fill="#7dffb3"/>
+                  </g>
+                  <ellipse cx="124" cy="470" rx="4" ry="3" fill="#ff5d8a"/>
+                  <path d="M112 478 Q124 486 136 478" fill="none" stroke="#3a2438" stroke-width="2.2" stroke-linecap="round"/>
+                  <ellipse cx="96" cy="466" rx="8" ry="4.5" fill="#ff8fb8" opacity=".75"/>
+                  <ellipse cx="152" cy="466" rx="8" ry="4.5" fill="#ff8fb8" opacity=".75"/>
+                </g>
+                <g class="robot-nap">
+                  <text class="nap-z nap-z1" x="168" y="392">Z</text>
+                  <text class="nap-z nap-z2" x="198" y="368">Z</text>
+                  <rect x="118" y="404" width="5" height="22" rx="2.5" fill="#b7cbe8"/>
+                  <circle class="nap-ball" cx="120.5" cy="398" r="7" fill="#5ef2ff"/>
+                  <rect x="62" y="428" width="118" height="96" rx="26" fill="url(#napHead)"/>
+                  <rect x="48" y="460" width="16" height="28" rx="8" fill="#9ebef2"/>
+                  <rect x="178" y="460" width="16" height="28" rx="8" fill="#9ebef2"/>
+                  <rect x="74" y="438" width="94" height="76" rx="20" fill="#141a33"/>
+                  <path class="nap-eye" d="M90 468 q12 9 24 0"/>
+                  <path class="nap-eye" d="M128 468 q12 9 24 0"/>
+                  <circle cx="121" cy="488" r="4" fill="#f3b6e4"/>
+                  <rect x="84" y="508" width="74" height="36" rx="14" fill="url(#napBody)"/>
+                  <rect x="70" y="518" width="16" height="10" rx="5" fill="#8eb4ee"/>
+                  <rect x="156" y="518" width="16" height="10" rx="5" fill="#8eb4ee"/>
+                  <rect x="98" y="516" width="46" height="20" rx="6" fill="#101628"/>
+                  <text class="nap-screen" x="121" y="530">ZZZ</text>
+                </g>
+              </svg>
+              <textarea class="lcd" id="lcd" spellcheck="false" aria-label="code"></textarea>
+              <div class="zzz" id="zzz" aria-hidden="true">z<b>z</b>z</div>
+            </div>
+          </div>
+          <div class="speech" id="speech" aria-live="polite"></div>
+          <div class="mood-pill" id="mood-pill">хурсанд</div>
+          <button type="button" class="day-chip" id="day-chip">шаб</button>
+          <div class="wx" aria-hidden="true"></div>
+          <div class="wx-bar" id="sky">
+            <button type="button" data-wx="" data-i18n="wxClear">Ором</button>
+            <button type="button" data-wx="rain" data-i18n="wxRain">Борон</button>
+            <button type="button" data-wx="snow" data-i18n="wxSnow">Барф</button>
+            <button type="button" data-wx="hot" data-i18n="wxHot">Гарм</button>
+            <button type="button" data-wx="cold" data-i18n="wxCold">Хунук</button>
+          </div>
+          <button type="button" class="lamp-btn" id="lamp-btn" hidden>Свет</button>
+          <div class="hunt" id="hunt" hidden></div>
+          <div class="hunt-hud" id="hunt-hud" hidden></div>
+          <div class="chaos" id="chaos" hidden>
+            <b class="chaos-title" data-i18n="chaosWord">ХАОС</b>
+            <div class="chaos-rain" id="chaos-rain"></div>
+          </div>
+          <div class="flare" id="flare" hidden></div>
+          <button type="button" class="chaos-fab" data-act="chaos" data-i18n="actChaos">Хаос</button>
+          <div class="god" id="god" hidden>
+            <i class="bolt"></i><i class="bolt bolt-b"></i><i class="bolt bolt-c"></i>
+            <div class="god-bot" aria-hidden="true">
+              <b class="god-ant"></b>
+              <div class="god-head"><i></i><i></i></div>
+              <div class="god-chest">GOD</div>
+            </div>
+          </div>
+          <div class="clones" id="clones" hidden></div>
+          <div class="scan" id="scan" hidden>
+            <i class="scan-line"></i>
+            <div class="scan-card" id="scan-card"></div>
+          </div>
+          <div class="storm" id="storm" hidden>
+            <div class="storm-rain" id="storm-rain"></div>
+            <div class="storm-wins" id="storm-wins"></div>
+            <div class="storm-bar"><i id="storm-fill"></i><b id="storm-pct">0%</b></div>
+          </div>
+          <div class="portal" id="portal" hidden></div>
+          <div class="boss" id="boss" hidden>
+            <div class="bug-boss" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="boss-hud">
+              <b>Bug Boss</b>
+              <div class="track"><i id="boss-hp"></i></div>
+              <div class="boss-acts">
+                <button type="button" id="boss-debug">DEBUG</button>
+                <button type="button" id="boss-patch">PATCH</button>
+                <button type="button" id="boss-fix">FIX</button>
+              </div>
+            </div>
+          </div>
+          <div class="timebox" id="timebox" hidden>
+            <div class="time-card">
+              <b data-i18n="timeTitle">Мошини вақт</b>
+              <p class="time-note" data-i18n="timeNote">Ин таърихи сабтшуда аст.</p>
+              <div id="time-body"></div>
+              <button type="button" id="time-close">OK</button>
+            </div>
+          </div>
+          <button type="button" id="restore-system" class="restore" hidden>RESTORE SYSTEM</button>
+        </div>
+
+        <p class="act-label" data-i18n="core">Амалҳои асосӣ</p>
+        <div class="actions">
+          <button type="button" id="btn-coffee" data-act="coffee">
+            <span class="chip chip-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 8h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8zM16 9h2.2a2.4 2.4 0 0 1 0 4.8H16M8 4.5c.4 1 .4 1.6 0 2.6M11.5 4.5c.4 1 .4 1.6 0 2.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actCoffee">Кофе</strong><small data-i18n="actCoffeeSub">+энергия</small></span>
+          </button>
+          <button type="button" id="btn-code" data-act="code">
+            <span class="chip chip-cyan" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 8 4 12l4 4M16 8l4 4-4 4M13 6l-2 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actCode">Код</strong><small data-i18n="actCodeSub">+лоиҳа</small></span>
+          </button>
+          <button type="button" id="btn-bug" data-act="bug">
+            <span class="chip chip-good" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 7v10M8 9H5M16 9h3M8 15H5M16 15h3M9 7l-2-3M15 7l2-3M8 12a4 4 0 0 0 8 0V9H8v3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actBug">Баг</strong><small data-i18n="actBugSub">+кайфият</small></span>
+          </button>
+          <button type="button" id="btn-sleep" data-act="sleep">
+            <span class="chip chip-violet" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16 4a7 7 0 1 0 4 12 8 8 0 1 1-4-12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actSleep">Хоб</strong><small data-i18n="actSleepSub">барқарор</small></span>
+          </button>
+        </div>
+
+        <p class="act-label" data-i18n="extra">Функсияҳои иловагӣ</p>
+        <div class="actions extra">
+          <button type="button" id="btn-pet" data-act="pet">
+            <span class="chip chip-pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actPet">Силам</strong><small data-i18n="actPetSub">хур-хур</small></span>
+          </button>
+          <button type="button" id="btn-deploy" data-act="deploy">
+            <span class="chip chip-pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 19V8M12 8l-4 4M12 8l4 4M5 21h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actDeploy">Деплой</strong><small data-i18n="actDeploySub">релиз</small></span>
+          </button>
+          <button type="button" id="btn-hunt" data-act="hunt">
+            <span class="chip chip-good" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actHunt">Шикор</strong><small data-i18n="actHuntSub">мини-бозӣ</small></span>
+          </button>
+          <button type="button" id="btn-focus" data-act="focus">
+            <span class="chip chip-cyan" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M13 3 6 13h6l-1 8 7-10h-6l1-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actFocus">Фокус</strong><small data-i18n="actFocusSub">кории амиқ</small></span>
+          </button>
+          <button type="button" id="btn-duck" data-act="duck">
+            <span class="chip chip-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><ellipse cx="10" cy="15" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="11" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19 11h3l-3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actDuck">Дак</strong><small data-i18n="actDuckSub">дебаг</small></span>
+          </button>
+          <button type="button" id="btn-keys" data-act="keys">
+            <span class="chip chip-violet" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 12h.01M11 12h.01M15 12h.01M8 15h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actKeys">Нишаст</strong><small data-i18n="actKeysSub">клавиатура</small></span>
+          </button>
+          <button type="button" id="btn-book" data-act="book">
+            <span class="chip chip-violet" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21.5zM5 5.5V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actBook">Китоб</strong><small data-i18n="actBookSub">мехонад</small></span>
+          </button>
+          <button type="button" id="btn-tune" data-act="tune">
+            <span class="chip chip-pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="18" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="16" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actTune">Наво</strong><small data-i18n="actTuneSub">оҳанг</small></span>
+          </button>
+          <button type="button" id="btn-draw" data-act="draw">
+            <span class="chip chip-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4zM13 7l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actDraw">Расм</strong><small data-i18n="actDrawSub">эскиз</small></span>
+          </button>
+          <button type="button" id="btn-wave" data-act="wave">
+            <span class="chip chip-pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 14V8a2 2 0 1 1 4 0v5M12 13V6a2 2 0 1 1 4 0v7M16 12V8a2 2 0 1 1 4 0v6c0 4-3 7-8 7-3 0-5-1-6-3l-2-3 2-1 2 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actWave">Салом</strong><small data-i18n="actWaveSub">бо даст</small></span>
+          </button>
+          <button type="button" id="btn-dance" data-act="dance">
+            <span class="chip chip-violet" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 4a2 2 0 1 0 0.01 0M8 10l3 2 2-3 3 2M7 21l2-6 3 2 2-2 3 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actDance">Рақс</strong><small data-i18n="actDanceSub">меҷунбад</small></span>
+          </button>
+          <button type="button" id="btn-jump" data-act="jump">
+            <span class="chip chip-cyan" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 20h12M8 16l4-8 4 8M12 4v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actJump">Ҷаҳиш</strong><small data-i18n="actJumpSub">боло</small></span>
+          </button>
+          <button type="button" id="btn-clap" data-act="clap">
+            <span class="chip chip-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 14l-3-3 2-2 3 3M16 14l3-3-2-2-3 3M9 15c1 2 5 2 6 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actClap">Чапак</strong><small data-i18n="actClapSub">ду даст</small></span>
+          </button>
+          <button type="button" id="btn-food" data-act="food">
+            <span class="chip chip-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="15" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 15c0-4 8-4 8 0M9 11c.4-2 2-3 3-3s2.6 1 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actFood">Хӯрок</strong><small data-i18n="actFoodSub">қувват</small></span>
+          </button>
+          <button type="button" id="btn-chaos" class="wild" data-act="chaos">
+            <span class="chip chip-pink" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 10-14h-7l0-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="btxt"><strong data-i18n="actChaos">Хаос</strong><small data-i18n="actChaosSub">форс-пуш</small></span>
+          </button>
+        </div>
+        <p class="act-label" data-i18n="show">Намоиш</p>
+        <div class="actions extra">
+          <button type="button" data-act="glitch">
+            <span class="chip chip-pink" aria-hidden="true">🌀</span>
+            <span class="btxt"><strong data-i18n="actGlitch">Глитч</strong><small data-i18n="actGlitchSub">воқеият</small></span>
+          </button>
+          <button type="button" data-act="clones">
+            <span class="chip chip-cyan" aria-hidden="true">👥</span>
+            <span class="btxt"><strong data-i18n="actClones">Клонҳо</strong><small data-i18n="actClonesSub">артиш</small></span>
+          </button>
+          <button type="button" data-act="scan">
+            <span class="chip chip-violet" aria-hidden="true">🧿</span>
+            <span class="btxt"><strong data-i18n="actScan">Скан</strong><small>SCAN</small></span>
+          </button>
+          <button type="button" data-act="storm">
+            <span class="chip chip-good" aria-hidden="true">💻</span>
+            <span class="btxt"><strong data-i18n="actStorm">Тӯфон</strong><small data-i18n="actStormSub">коди сабз</small></span>
+          </button>
+          <button type="button" data-act="boss">
+            <span class="chip chip-amber" aria-hidden="true">👹</span>
+            <span class="btxt"><strong data-i18n="actBoss">Босс</strong><small data-i18n="actBossSub">баги азим</small></span>
+          </button>
+          <button type="button" data-act="time">
+            <span class="chip chip-violet" aria-hidden="true">⏳</span>
+            <span class="btxt"><strong data-i18n="actTime">Вақт</strong><small data-i18n="actTimeSub">таърих</small></span>
+          </button>
+        </div>
+        <p class="keys" data-i18n="keys">C кофе · K код · B баг · S хоб · P силам · D деплой · H шикор · F фокус</p>
+      </section>
+
+      <aside class="panel inspector" id="inspector">
+        <div class="ih">
+          <h2 data-i18n="inspector">Инспектор</h2>
+          <div class="level">
+            <b id="level-label">Lv. 1</b>
+            <div class="xp" aria-hidden="true"><i id="xp-bar"></i></div>
+          </div>
+        </div>
+        <p class="combo" id="combo-label" hidden></p>
+
+        <div class="meters">
+          <div class="meter" data-key="energy">
+            <div class="meter-top"><span data-i18n="energy">Энергия</span><b id="val-energy">70</b></div>
+            <div class="track"><i id="bar-energy"></i></div>
+          </div>
+          <div class="meter" data-key="mood">
+            <div class="meter-top"><span data-i18n="mood">Кайфият</span><b id="val-mood">66</b></div>
+            <div class="track"><i id="bar-mood"></i></div>
+          </div>
+          <div class="meter" data-key="quality">
+            <div class="meter-top"><span data-i18n="quality">Сифати код</span><b id="val-quality">64</b></div>
+            <div class="track"><i id="bar-quality"></i></div>
+          </div>
+          <div class="meter" data-key="coffee">
+            <div class="meter-top"><span data-i18n="coffee">Сатҳи кофе</span><b id="val-coffee">58</b></div>
+            <div class="track"><i id="bar-coffee"></i></div>
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="meter-top"><span data-i18n="project">Лоиҳа</span><b id="ver">v1 · 22%</b></div>
+          <div class="track track-wide"><i id="bar-project"></i></div>
+          <small id="milestone"></small>
+          <small id="deploy-hint"></small>
+        </div>
+
+        <label class="field pet-name">
+          <span data-i18n="petName">Номи питомец</span>
+          <span class="pet-name-row">
+            <input id="pet-name" maxlength="16" spellcheck="false" autocomplete="off" value="Нурик">
+            <button type="button" id="pet-name-go" data-i18n="petNameGo">Номгузорӣ</button>
+          </span>
+        </label>
+
+        <div class="field">
+          <span data-i18n="hero">Қаҳрамон</span>
+          <div class="heroes" id="heroes">
+            <button type="button" data-hero="cat" data-i18n="heroCat">Зарра</button>
+            <button type="button" data-hero="robot" data-i18n="heroRobot">Робот</button>
+            <button type="button" data-hero="fox" data-i18n="heroFox">Рӯбоҳ</button>
+            <button type="button" data-hero="bear" data-i18n="heroBear">Хирс</button>
+            <button type="button" data-hero="bird" data-i18n="heroBird">Парранда</button>
+          </div>
+        </div>
+
+        <label class="field color-all">
+          <span data-i18n="allColors">Ҳамаи ранг</span>
+          <span class="swatch">
+            <input type="color" id="color-all" value="#ff4ecd" aria-label="color">
+          </span>
+        </label>
+
+        <div class="life">
+          <div class="life-h">
+            <h3 data-i18n="questTitle">Миссияи имрӯз</h3>
+            <b id="coin-label">0 <span data-i18n="coins">танга</span></b>
+          </div>
+          <div class="quest" id="quest"></div>
+          <p class="chest-note" id="chest-note"></p>
+          <h3 data-i18n="shopTitle">Дӯкон</h3>
+          <div class="shop" id="shop"></div>
+          <h3 data-i18n="wearTitle">Либос</h3>
+          <div class="wear-bar" id="wear-bar"></div>
+          <div class="chatbox" id="chatbox">
+            <div class="chat-log" id="chat-log"></div>
+            <form class="chat" id="chat">
+              <input id="chat-in" maxlength="80" autocomplete="off" placeholder="Салом, Чӣ ҳол дорӣ?, Код навис">
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <h3 data-i18n="ach">Дастовардҳо</h3>
+          <div class="achs" id="achs"></div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="panel terminal" id="terminal">
+      <div class="term-h">
+        <h2 data-i18n="terminal">Терминал</h2>
+        <code id="prompt">murra@ide:~$</code>
+        <span class="grow"></span>
+        <button type="button" class="ghost tiny" id="btn-clear" data-i18n="logClear">Логро тоза</button>
+        <button type="button" class="ghost tiny" id="btn-reset" data-i18n="reset">Аз нав</button>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <form class="shell" id="shell">
+        <span class="shell-prompt">zarra@ide:~$</span>
+        <input id="shell-in" autocomplete="off" spellcheck="false" placeholder="help, coffee, git status, sudo...">
+      </form>
+    </section>
+  </div>
+
+  <div class="settings" id="settings" hidden>
+    <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="settings-h">
+        <h3 id="settings-title" data-i18n="settings">Танзим</h3>
+        <button type="button" class="ghost tiny" id="settings-close" aria-label="close">×</button>
+      </div>
+      <p class="set-label" data-i18n="langLabel">Забон</p>
+      <div class="langs" id="langs"></div>
+      <div class="switches">
+        <div class="switch-row">
+          <span data-i18n="sound">Садо</span>
+          <button type="button" id="btn-sound" class="switch is-on" aria-pressed="true">
+            <span class="switch-label">ON</span>
+            <i class="knob" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="switch-row">
+          <span data-i18n="nasim">Насим</span>
+          <button type="button" id="btn-lofi" class="switch" aria-pressed="false">
+            <span class="switch-label">OFF</span>
+            <i class="knob" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <p class="day-note" id="day-note"></p>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+      <div class="modal-actions">
+        <button type="button" class="ghost" id="modal-cancel"></button>
+        <button type="button" class="solid" id="modal-ok"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
